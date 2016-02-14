@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+  </head>
+
+  <body>
+
+    <div id="representation">
+
+      <div v-if="stateReady">
+        <p>Counter: {{ model.counter }} </p>
+        <button v-on:click="start">Start</button>
+      </div>
+
+      <div v-if="stateCounting">
+        <p>Counter: {{ model.counter }} </p>
+        <button v-on:click="abort">Abort</button>
+      </div>
+
+
+      <div v-if="stateAborted">
+        <p>Aborted at Counter: {{ model.counter }}</p>
+      </div>
+
+      <div v-if="stateLaunched">
+        <p>Launched</p>
+      </div>
+
+
+
+    </div>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+    <script type='text/javascript' src="./rocket.js"></script>
+</body>
+</html>
