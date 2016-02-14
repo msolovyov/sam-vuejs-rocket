@@ -1,7 +1,7 @@
 
 /*global Vue*/
 
-var COUNTER_MAX = 10
+const COUNTER_MAX = 10;
 
 var rocket = new Vue({
   el: '#representation',
@@ -22,19 +22,19 @@ var rocket = new Vue({
   // state
   computed: {
     stateReady: function () {
-      return ((this.model.counter === COUNTER_MAX) && !this.model.started && !this.model.launched && !this.model.aborted)
+      return ((this.model.counter === COUNTER_MAX) && !this.model.started && !this.model.launched && !this.model.aborted);
     },
     stateCounting: function () {
-      return ((this.model.counter <= COUNTER_MAX) && (this.model.counter >= 0) && this.model.started && !this.model.launched && !this.model.aborted)
+      return ((this.model.counter <= COUNTER_MAX) && (this.model.counter >= 0) && this.model.started && !this.model.launched && !this.model.aborted);
     },
 
     stateLaunched: function () {
-      return ((this.model.counter === 0) && this.model.started && this.model.launched && !this.model.aborted)
+      return ((this.model.counter === 0) && this.model.started && this.model.launched && !this.model.aborted);
     },
 
     stateAborted: function () {
       return (
-        (this.model.counter <= COUNTER_MAX) && (this.model.counter >= 0) && this.model.started && !this.model.launched && this.model.aborted)
+        (this.model.counter <= COUNTER_MAX) && (this.model.counter >= 0) && this.model.started && !this.model.launched && this.model.aborted);
     }
 
   },
@@ -42,32 +42,32 @@ var rocket = new Vue({
   methods: {
     decrement: function () {
       setTimeout(function () {
-        rocket.model.counter = rocket.model.counter - 1
-        rocket.nextAction()
-      }, 1000)
+        rocket.model.counter = rocket.model.counter - 1;
+        rocket.nextAction();
+      }, 1000);
     },
     start () {
-      rocket.model.started = true
-      rocket.nextAction()
+      rocket.model.started = true;
+      rocket.nextAction();
     },
     launch () {
-      rocket.model.launched = true
-      rocket.nextAction()
+      rocket.model.launched = true;
+      rocket.nextAction();
     },
     abort () {
-      rocket.model.aborted = true
-      rocket.nextAction()
+      rocket.model.aborted = true;
+      rocket.nextAction();
     },
     nextAction: function () {
       if (rocket.stateCounting) {
         if (rocket.model.counter > 0) {
-          rocket.decrement()
+          rocket.decrement();
         }
         if (rocket.model.counter === 0) {
-          rocket.launch()
+          rocket.launch();
         }
       }
     }
 
   }
-})
+});
