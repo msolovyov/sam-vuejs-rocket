@@ -44,23 +44,20 @@ var rocket = new Vue({
     decrement: function () {
       setTimeout(function(){
         rocket.model.counter = rocket.model.counter - 1;
-        rocket.present();
+        rocket.nextAction();
       }, 1000);
 
     },
     start() {
       rocket.model.started = true;
-      rocket.present();
+      rocket.nextAction();
     },
     launch(){
       rocket.model.launched = true;
-      rocket.present();
+      rocket.nextAction();
     },
     abort(){
       rocket.model.aborted = true;
-      rocket.present();
-    },
-    present(){
       rocket.nextAction();
     },
     nextAction: function () {
