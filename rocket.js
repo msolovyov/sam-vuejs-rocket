@@ -38,36 +38,76 @@ var rocket = new Vue({
     }
 
   },
-  // actions
+
   methods: {
-    decrement: function () {
-      setTimeout(function () {
-        rocket.model.counter = rocket.model.counter - 1;
-        rocket.nextAction();
-      }, 1000);
+    modelPresent (data) {
+      if (this.stateCounting) {
+        if (this.model.counter === 0) {
+          this.model.launched = data.launched || false ;
+        } else {
+          this.model.aborted = data.aborted || false ;
+          if (data.counter !== undefined) { this.model.counter = data.counter ; }
+        }
+      } else {
+        if (this.stateReady) {
+          this.model.started = data.started || false ;
+        }
+      }
+      rocket.nextAction();
     },
+
     start () {
-      rocket.model.started = true;
-      rocket.nextAction();
+      actions.start({});
     },
-    launch () {
-      rocket.model.launched = true;
-      rocket.nextAction();
+    abort() {
+      actions.abort({});
     },
-    abort () {
-      rocket.model.aborted = true;
-      rocket.nextAction();
-    },
+
     nextAction: function () {
       if (rocket.stateCounting) {
         if (rocket.model.counter > 0) {
-          rocket.decrement();
+          actions.decrement({counter: this.model.counter},this.modelPresent) ;
         }
         if (rocket.model.counter === 0) {
-          rocket.launch();
+          actions.launch({},this.modelPresent) ;
         }
       }
     }
 
   }
 });
+
+
+var actions = {} ;
+
+actions.start = function(data, present) {
+	present = present || rocket.modelPresent ;
+	data.started = true ;
+	present(data) ;
+	return false ;
+}
+
+actions.decrement = function(data, present) {
+	present = present || rocket.modelPresent ;
+	data = data || {} ;
+	data.counter = data.counter || 10 ;
+	var d = data ;
+	var p = present ;
+	setTimeout(function() {
+		d.counter = d.counter - 1 ;
+		p(d) ;
+	}, 1000) ;
+}
+
+actions.launch = function(data, present) {
+	present = present || rocket.modelPresent ;
+	data.launched = true ;
+	present(data) ;
+}
+
+actions.abort = function(data, present) {
+	present = present || rocket.modelPresent ;
+	data.aborted = true ;
+	present(data) ;
+	return false ;
+}
