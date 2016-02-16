@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+  </head>
+
+  <body>
+
+    <div id="representation">
+
+      <div v-if="stateReady">
+        <ul >
+
+
+          <li v-for="item in items">
+            <h3 v-on:click="edit($index)" >{{item.name}}</h3>
+            <p>{{item.description}}</p>
+            <button v-on:click="delete($index)">Delete</button>
+            <br>
+          </li>
+
+
+
+        </ul>
+        <div>
+          <input type="text" id="name" v-model="itemV.name" placeholder="Name">
+          <input type="text" id="description" v-model="itemV.description" placeholder="Description">
+          <button v-on:click="add" v-if="stateAdding">Add</button>
+
+          <button v-on:click="save" v-if="stateEditing">Save</button>
+          <button v-on:click="cancel" v-if="stateEditing">Cancel</button>
+        </div>
+      </div>
+
+
+
+    </div>
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script type='text/javascript' src="./list.js"></script>
+</body>
+</html>
